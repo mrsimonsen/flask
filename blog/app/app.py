@@ -130,7 +130,7 @@ def logout():
 
 @app.route('/')
 def index():
-	search_query = resuest.args.get('q')
+	search_query = request.args.get('q')
 	if search_query:
 		query = Entry.search(search_query)
 	else:
