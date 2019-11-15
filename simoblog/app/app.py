@@ -3,6 +3,7 @@ import functools
 import os
 import re
 import urllib
+from hash_password import hash_password
 
 from flask import (Flask, flash, Markup, redirect, render_template, request,
                    Response, session, url_for)
@@ -18,9 +19,7 @@ from playhouse.sqlite_ext import *
 
 # Blog configuration values.
 
-# You may consider using a one-way hash to generate the password, and then
-# use the hash again in the login view to perform the comparison. This is just
-# for simplicity.
+# created with a one-way hash to generate the password.
 ADMIN_PASSWORD = 'e47c9709d8e3e29faa8fcaa27b56cd51897fbbec176b12ee9e88b76f26fbc4be:02bde2cdbf5a4420804d01cb1037c42d'
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -30,7 +29,7 @@ DEBUG = False
 
 # The secret key is used internally by Flask to encrypt session data stored
 # in cookies. Make this unique for your app.
-SECRET_KEY = 'shhh, secret!'
+SECRET_KEY = 'secret, for encryption'
 
 # This is used by micawber, which will attempt to generate rich media
 # embedded objects with maxwidth=800.
@@ -154,10 +153,9 @@ def login_required(fn):
 def login():
     next_url = request.args.get('next') or request.form.get('next')
     if request.method == 'POST' and request.form.get('password'):
-        password = request.form.get('password')
+        password = hash_password(request.form.get('password'))
         # TODO: If using a one-way hash, you would also hash the user-submitted
         # password and do the comparison on the hashed versions.
-        password =
         if password == app.config['ADMIN_PASSWORD']:
             session['logged_in'] = True
             session.permanent = True  # Use cookie to store session.
