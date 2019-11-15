@@ -5,10 +5,8 @@
 {% block content_title %}Log out{% endblock %}
 
 {% block content %}
-	<p>Click the button below to low out of the site.</p>
-	<form action="{{ url_from('logout') }}" class="form-horizontal" method="post">
-		<button class="btn btn-primary" type="submit">
-			Log out
-		</button>
-	</form>
+  <p>Click the button below to log out of the site.</p>
+  <form action="{{ url_for('logout') }}" class="form-horizontal" method="post">
+    <button class="btn btn-primary" type="submit">Log out</button>
+  </form>
 {% endblock %}
