@@ -8,3 +8,4 @@ just a little repo for me to learn and experiment with flask as I create a blog 
 From 2014, doesn't work. [Encrypting Database](https://charlesleifer.com/blog/encrypted-sqlite-databases-with-python-and-sqlcipher/)
 
 Reading *Learning Flask Framework* page: viii
+
