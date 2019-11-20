@@ -3,8 +3,8 @@ import functools
 import os
 import re
 import urllib
-from hash_password import hash_password
 
+from hash_password import hash_password
 from flask import (Flask, flash, Markup, redirect, render_template, request,
                    Response, session, url_for)
 from markdown import markdown
@@ -20,7 +20,7 @@ from playhouse.sqlite_ext import *
 # Blog configuration values.
 
 # created with a one-way hash to generate the password.
-ADMIN_PASSWORD = 'e47c9709d8e3e29faa8fcaa27b56cd51897fbbec176b12ee9e88b76f26fbc4be:02bde2cdbf5a4420804d01cb1037c42d'
+ADMIN_PASSWORD = 'e4ce49e23690ab34055b5c5ecdbed5347d879cdbdfce3a11e27a335cf78136db'
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
 
 # The playhouse.flask_utils.FlaskDB object accepts database URL configuration.
@@ -153,9 +153,9 @@ def login_required(fn):
 def login():
     next_url = request.args.get('next') or request.form.get('next')
     if request.method == 'POST' and request.form.get('password'):
-        password = hash_password(request.form.get('password'))
-        # TODO: If using a one-way hash, you would also hash the user-submitted
-        # password and do the comparison on the hashed versions.
+        password = hash_password(request.form.get('password'),'ac92060e1ba746ef8fff6044facf3e48')
+        password = password.split(':')[0]
+        #hash the user-submitted password and do the comparison on the hashed versions.
         if password == app.config['ADMIN_PASSWORD']:
             session['logged_in'] = True
             session.permanent = True  # Use cookie to store session.
@@ -255,7 +255,7 @@ def clean_querystring(request_args, *keys_to_remove, **new_values):
 
 @app.errorhandler(404)
 def not_found(exc):
-    return Response('<h3>Not found</h3>'), 404
+    return Response(render_template("404.html")), 404
 
 def main():
     database.create_tables([Entry, FTSEntry], safe=True)
