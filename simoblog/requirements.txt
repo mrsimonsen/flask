@@ -4,5 +4,3 @@ micawber
 pygments
 markdown
 peewee
-
-pyopenssl
